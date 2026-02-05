@@ -12,6 +12,7 @@ class ImportAlgorithms:
         transactions_dict = {}
         headers = []
         values=[]
+
         #reading the csv file 
         with open(csv_file, 'r') as csv:
             csv_reader= csv.reader(csv)
@@ -23,9 +24,11 @@ class ImportAlgorithms:
         for header in headers:
             for row in csv_reader:
                 values.append(row[header])
-                transactions_dict.update({"%s", values})
-                values= []
+            transactions_dict.update({"%s": values} %header)
+            values= []
 
         #parsing this dictionary into a dataframe for easier use
-        dataframe = pd.DataFrame(transactions_dict)
+        df = pd.DataFrame(transactions_dict)
 
+        #cast all types to their corresponding ones
+        

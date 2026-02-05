@@ -14,7 +14,6 @@ class AuthorisationAlgorithms:
         if user_id is None:
             return ["error", "Your username is not recognised, please try another."]
         return self.verify_password(user_id, password)
-
         
     def verify_password(self, user_id, password):
         #retrieving the hashed password of user in database
