@@ -4,4 +4,4 @@ from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepo
 dbCon = 'dummy'
 repo = BudgetAndTransactionRepository(dbCon)
 import_module = ImportAlgorithms(repo)
-import_module.parse_csv('fake_data.csv')
+import_module.parse_csv("transactions.csv")

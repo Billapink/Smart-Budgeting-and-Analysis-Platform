@@ -9,26 +9,16 @@ class ImportAlgorithms:
         self.required_columns = ["date", "merchant", "amount", "description"]
 
     def parse_csv(self, csv_file):
-        transactions_dict = {}
-        headers = []
-        values=[]
+        transaction_rows = []
 
-        #reading the csv file 
-        with open(csv_file, 'r') as csv:
-            csv_reader= csv.reader(csv)
+        #parsing the csv into a dataframe using pandas 
+        df= pd.read_csv(csv_file)
+        #assigning 'headers' to the column names of the dataframe
+        headers= set(df.columns)
+        #
+        for element in headers:
+            print(element)
 
-        #populating the headers array with the transaction data fields
-        headers = next(csv_reader)
-        #populating the transaction dictionary with the headers and an 
-        # array of their corresponding values
-        for header in headers:
-            for row in csv_reader:
-                values.append(row[header])
-            transactions_dict.update({"%s": values} %header)
-            values= []
-
-        #parsing this dictionary into a dataframe for easier use
-        df = pd.DataFrame(transactions_dict)
 
         #cast all types to their corresponding ones
         
