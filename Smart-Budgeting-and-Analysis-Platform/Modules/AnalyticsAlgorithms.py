@@ -1,3 +1,5 @@
+from dateutil.relativedelta import relativedelta
+
 class AnalyticsAlgorithms:
     def __init__(self, transaction_repo, KPI_list, forecase_window, moving_avg_weights):
         self.transaction_repo = transaction_repo
@@ -26,3 +28,15 @@ class AnalyticsAlgorithms:
         }
         
         return KPIS
+
+
+    def compute_mom(self, month, kpi):
+        '''
+        Calculates the difference between the average kpi between a month and the previous month
+        '''
+
+        previousMonth = month + relativedelta(months = -1)
+        kpis = self.compute_kpis(month)
+        kpisPrevious = self.compute_kpis(previousMonth)
+
+        return kpis[kpi] - kpisPrevious[kpi]
