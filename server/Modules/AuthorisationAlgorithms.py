@@ -19,6 +19,8 @@ class AuthorisationAlgorithms:
             
         
     def verify_password(self, user_id, password):
+        if len(password)< self.min_password_length:
+            return ["error", "Password length too short."]
         #retrieving the hashed password of user in database
         actual_password_hash = self.authorisation_repo.get_passwordhash_by_id(user_id)
         if self.hash_password(password)== actual_password_hash:
