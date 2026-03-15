@@ -6,7 +6,7 @@ from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepo
 repo = BudgetAndTransactionRepository([])
 analytics = AnalyticsAlgorithms(repo, [], [],[])
 
-analytics_bp = Blueprint('alerts', __name__)
+analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route("/get_kpis", methods=["GET"])
 def get_kpis():

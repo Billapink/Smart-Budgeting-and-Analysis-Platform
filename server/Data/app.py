@@ -1,4 +1,4 @@
-from Modules import ImportAlgorithms
+from Modules.ImportAlgorithms import ImportAlgorithms
 
 import_module = ImportAlgorithms()
 

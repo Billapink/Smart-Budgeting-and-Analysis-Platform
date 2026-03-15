@@ -8,7 +8,7 @@ from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepo
 repo = BudgetAndTransactionRepository([])
 import_alg = ImportAlgorithms(repo)
 
-import_routes_bp = Blueprint('alerts', __name__)
+import_routes_bp = Blueprint('import', __name__)
 
 ALLOWED_EXTENSIONS = {'csv'}
 

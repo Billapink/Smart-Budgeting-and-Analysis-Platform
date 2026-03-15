@@ -1,8 +1,11 @@
 import random as r
+from flask import g
+
+from Repositories.AuthorisationRepository import getAuthorisationRepo
 
 class AuthorisationAlgorithms:
-    def __init__ (self, repo):
-        self.authorisation_repo= repo
+    def __init__ (self):
+        self.authorisation_repo= getAuthorisationRepo()
         self.min_password_length, self.max_password_length = 7,10
         self.min_username_length, self.max_username_length = 4, 10
         self.min_company_length, self.max_company_length = 4, 10
@@ -53,8 +56,8 @@ class AuthorisationAlgorithms:
             if char in '0123456789':
                 numeric_char = True
         if spec_char and numeric_char:
-            self.authorisation_repo.create_user(username,self.hash_password(password))
-            return ["success", "Account successfully created."]
+            [status, message] = self.authorisation_repo.create_user(username,self.hash_password(password))
+            return ["success", "Account successfully created."] if status == "success" else ["error", message]
         return ["error","Password must include one special character and numerical value."]
 
     def create_company(self, user_id, company_name):
@@ -90,3 +93,10 @@ class AuthorisationAlgorithms:
                 return ["success", "You have successfully logged into the company data."]
             return ["error", "Company code incorrect."]
         return ["error", "You do not have a membership to this company."]
+
+def getAuthorisationAlgorithms():
+    if "auth_algorithms" in g:
+        return g.auth_algorithms;
+
+    g.auth_algorithms = AuthorisationAlgorithms()
+    return g.auth_algorithms

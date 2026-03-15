@@ -5,7 +5,8 @@ from Routes.AnalyticsRoutes import analytics_bp
 from Routes.AlertsRoutes import alerts_bp
 from Routes.ImportRoutes import import_routes_bp
 
-from flask import Flask
+from flask import Flask, g
+from flask_cors import CORS
 
 # dbCon = 'dummy'
 # repo = BudgetAndTransactionRepository(dbCon)
@@ -16,8 +17,19 @@ from flask import Flask
 UPLOAD_FOLDER = '/path/to/the/uploads'
 
 app = Flask(__name__)
+CORS(app)
+
+
+@app.teardown_appcontext
+def close_db(exception):
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.register_blueprint(authorisation_bp)
 app.register_blueprint(analytics_bp)
 app.register_blueprint(alerts_bp)
 app.register_blueprint(import_routes_bp)
+
+app.run(debug=True)
