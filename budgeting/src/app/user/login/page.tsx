@@ -1,18 +1,26 @@
 "use client"
+import { useAtom } from "jotai";
+import { userState } from "@/app/userdata";
+import { redirect, RedirectType } from "next/navigation";
 import { useState } from "react";
 
-const REGISTER_ENDPOINT = "http://127.0.0.1:5000/register";
+const LOGIN_ENDPOINT = "http://127.0.0.1:5000/login";
 
-function UserRegistration() {
+function UserLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
+  const [user, setUser] = useAtom(userState);
+
+  if (user.loggedIn) {
+    redirect('/', RedirectType.replace)
+  }
 
   const handleSubmit = async (event: any) => {
     setStatus("");
     event.preventDefault();
     const data = {username, password};
-    const resp = await fetch(REGISTER_ENDPOINT, {
+    const resp = await fetch(LOGIN_ENDPOINT, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -21,13 +29,22 @@ function UserRegistration() {
         body: JSON.stringify(data)
     });
     const blob = await resp.blob();
-    setStatus(resp.status === 200 ? "You have been registered" : await blob.text());
+    console.log(await blob.text());
+    if (resp.status !== 200) {
+        setStatus(await blob.text());
+    } else {
+        setUser({
+            loggedIn: true,
+            username: username,
+            userID: Number.parseInt(await blob.text())
+        })
+    }
   };
 
   return (
     <div className="flex flex-row justify-center">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <h1>Register</h1>
+            <h1>Login</h1>
             <label>Username
                 <input type="text" onChange={(e) => setUsername(e.target.value)} value={username} />
             </label>
@@ -35,7 +52,7 @@ function UserRegistration() {
                 <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
             </label>
             <button type="submit" disabled={!(username && password)}>
-                Register
+                Login
             </button>
             {status ? <h1>{status}</h1> : null}
         </form>
@@ -43,4 +60,4 @@ function UserRegistration() {
   );
 }
 
-export default UserRegistration;
+export default UserLogin;

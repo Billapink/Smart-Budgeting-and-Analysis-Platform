@@ -126,7 +126,7 @@
   }
 
   /* Buttons */
-  .btn-primary {
+  button, .btn-primary {
     @apply bg-purple-600 text-white hover:bg-purple-700 transition-colors;
   }
 

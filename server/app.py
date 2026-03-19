@@ -4,6 +4,7 @@ from Routes.AuthorisationRoutes import authorisation_bp
 from Routes.AnalyticsRoutes import analytics_bp
 from Routes.AlertsRoutes import alerts_bp
 from Routes.ImportRoutes import import_routes_bp
+from Routes.AdminRoutes import admin_bp
 
 from flask import Flask, g
 from flask_cors import CORS
@@ -31,5 +32,6 @@ app.register_blueprint(authorisation_bp)
 app.register_blueprint(analytics_bp)
 app.register_blueprint(alerts_bp)
 app.register_blueprint(import_routes_bp)
+app.register_blueprint(admin_bp)
 
 app.run(debug=True)

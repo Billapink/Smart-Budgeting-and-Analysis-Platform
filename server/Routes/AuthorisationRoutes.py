@@ -10,9 +10,11 @@ def login():
     username = data["username"]
     password = data["password"]
     authorisation = getAuthorisationAlgorithms()
-    [status, message] = authorisation.login(username, password)
-    code = 400 if status == "success" else 403
-    return message, code;
+    [status, data] = authorisation.login(username, password)
+    if status == "success":
+        return str(data), 200
+    
+    return data, 403;
 
 @authorisation_bp.route("/register", methods=["POST"])
 def register():
@@ -28,13 +30,14 @@ def register():
 @authorisation_bp.route("/join_company", methods=["POST"])
 def join_company():
     data = request.get_json()
-    user_id    = data["user_id"]
-    company_id = data["company_id"]
+    user_id    = int(data["user_id"])
+    company_id = int(data["company_id"])
     role       = data["role"]
-    code_input = data["code_input"]
+    code_input = int(data["code_input"])
     authorisation = getAuthorisationAlgorithms()
     [status, message] = authorisation.join_company_by_code(user_id, company_id, role, code_input)
-    return "success"
+    code = 200 if status == "success" else 403
+    return message, code;
 
 @authorisation_bp.route("/logout", methods=["POST"])
 def logout():

@@ -17,7 +17,7 @@ class AuthorisationAlgorithms:
         if user_id is None:
             return ["error", "Your username is not recognised, please try another."]
         elif self.verify_password(user_id, password):
-            return ["success", "You have successfully logged in."]
+            return ["success", user_id]
         return ["error", "Incorrect password"]
             
         
@@ -26,7 +26,7 @@ class AuthorisationAlgorithms:
             return ["error", "Password length too short."]
         #retrieving the hashed password of user in database
         actual_password_hash = self.authorisation_repo.get_passwordhash_by_id(user_id)
-        if self.hash_password(password)== actual_password_hash:
+        if self.hash_password(password) == actual_password_hash:
             return True
         return False
         
@@ -72,6 +72,7 @@ class AuthorisationAlgorithms:
         for i in range(6):
             company_code.append(str(r.randint(1,9)))
         company_code = ''.join(company_code)
+        print(f"Creating company {company_name}, {company_code}")
         self.authorisation_repo.create_company(company_name, company_code)
         company_id = self.authorisation_repo.get_company_id(company_name)
         self.authorisation_repo.add_membership(user_id, company_id, "owner")
@@ -80,8 +81,9 @@ class AuthorisationAlgorithms:
     #joining a company as a member using the code
     def join_company_by_code(self, user_id, company_id, role, code_input):
         company_code = self.authorisation_repo.get_company_code(company_id)
+        print(f"Attempting to join {code_input} {company_id} {company_code}")
         if code_input == company_code:
-            self.authorisation_repo.create_membership(user_id, company_id, role)
+            self.authorisation_repo.add_membership(user_id, company_id, role)
             return ["success", "Successfully joined company."]
         return ["error", "Incorrect company name or code."]
 
