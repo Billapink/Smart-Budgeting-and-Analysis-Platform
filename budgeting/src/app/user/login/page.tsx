@@ -12,8 +12,8 @@ function UserLogin() {
   const [status, setStatus] = useState("");
   const [user, setUser] = useAtom(userState);
 
-  if (user.loggedIn) {
-    redirect('/', RedirectType.replace)
+  if (user?.loggedIn) {
+    redirect(user.company ? '/' : '/user/select-company', RedirectType.replace)
   }
 
   const handleSubmit = async (event: any) => {

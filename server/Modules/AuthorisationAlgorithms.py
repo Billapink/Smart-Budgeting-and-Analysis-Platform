@@ -78,6 +78,11 @@ class AuthorisationAlgorithms:
         self.authorisation_repo.add_membership(user_id, company_id, "owner")
         return ["success", "Company successfully created."]
 
+    def get_memberships(self, user_id):
+        #checking if name already taken
+        memberships = self.authorisation_repo.get_memberships(user_id)
+        return ["success", memberships]
+    
     #joining a company as a member using the code
     def join_company_by_code(self, user_id, company_id, role, code_input):
         company_code = self.authorisation_repo.get_company_code(company_id)

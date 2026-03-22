@@ -12,6 +12,10 @@ function JoinCompany() {
   const [status, setStatus] = useState("");
   const [user] = useAtom(userState);
 
+  if (user && !user.userID) {
+    redirect('/user/login');
+  }
+
   const handleSubmit = async (event: any) => {
     setStatus("");
     event.preventDefault();

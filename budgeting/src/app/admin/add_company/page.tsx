@@ -1,6 +1,7 @@
 "use client"
 import { userState } from "@/app/userdata";
 import { useAtom } from "jotai";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 const ADD_COMPANY_ENDPOINT = "http://127.0.0.1:5000/create_company";
@@ -9,6 +10,10 @@ function AddCompany() {
   const [companyName, setCompanyName] = useState("");
   const [status, setStatus] = useState("");
   const [user] = useAtom(userState);
+
+  if (user && !user.userID) {
+    redirect('/user/login');
+  }
 
   const handleSubmit = async (event: any) => {
     setStatus("");

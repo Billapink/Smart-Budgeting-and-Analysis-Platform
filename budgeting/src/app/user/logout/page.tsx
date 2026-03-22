@@ -6,7 +6,7 @@ import { redirect, RedirectType } from "next/navigation";
 function UserLogin() {
   const [user, setUser] = useAtom(userState);
 
-  if (!user.loggedIn) {
+  if (user && !user.loggedIn) {
     redirect('/user/login', RedirectType.replace)
   }
 

@@ -2,11 +2,12 @@ import csv
 import pandas as pd
 
 class ImportAlgorithms:
-    def __init__(self, transaction_repo):
+    def __init__ (self):
+        # self.transaction_repo= getAuthorisationRepo()
         #passing in the transaction repository and defining required columns
         # for financial transaction data
-        self.transaction_repo = transaction_repo
-        self.required_columns = ["date", "merchant", "amount", "description"]
+
+        self.required_columns = ["date", "merchant", "amount"]
 
     def parse_csv(self, csv_file):
         transaction_rows = []

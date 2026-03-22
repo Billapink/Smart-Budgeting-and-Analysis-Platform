@@ -14,10 +14,25 @@ export default function Home() {
                 Join Company
             </Link>
         </p>
+        <p>
+            <Link href="user/select-company" className="font-medium text-zinc-950">
+                Select Company
+            </Link>
+        </p>
         <h2 className="text-lg my-2">Admin Routes</h2>
         <p>
             <Link href="admin/add_company" className="font-medium text-zinc-950">
                 Add Company
+            </Link>
+        </p>
+        <p>
+            <Link href="categories/create" className="font-medium text-zinc-950">
+                Add Category
+            </Link>
+        </p>
+        <p>
+            <Link href="categories/create-rule" className="font-medium text-zinc-950">
+                Create Rule
             </Link>
         </p>
         <h2 className="text-lg my-2">Import Routes</h2>

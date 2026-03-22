@@ -19,6 +19,24 @@ def initTables():
         FOREIGN KEY(userID) REFERENCES users(userID),
         FOREIGN KEY(companyID) REFERENCES companies(companyID)
     );
+    CREATE TABLE IF NOT EXISTS categories(
+        categoryID INTEGER PRIMARY KEY, 
+        companyID INTEGER,
+        category_name,
+        type,
+        FOREIGN KEY(companyID) REFERENCES companies(companyID)
+    );
+    CREATE TABLE IF NOT EXISTS category_rules(
+        ruleID INTEGER PRIMARY KEY, 
+        categoryID INTEGER, 
+        companyID INTEGER,
+        match_type,
+        pattern,
+        priority INTEGER,
+        active INTEGER,
+        FOREIGN KEY(categoryID) REFERENCES categories(categoryID),
+        FOREIGN KEY(companyID) REFERENCES companies(companyID)
+    );
     END;
     """)
 
@@ -28,6 +46,7 @@ def getDB():
     
     g.db = sqlite3.connect(DATABASE_FILE)
     tables = g.db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='users'").fetchall()
-    if (len(tables) < 3):
+    print('NUMBER OF TABLES', len(tables))
+    if (len(tables) < 5):
         initTables()
     return g.db

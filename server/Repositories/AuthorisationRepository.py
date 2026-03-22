@@ -52,6 +52,19 @@ class AuthorisationRepository:
         
         return None
 
+    def get_memberships(self, user_id):
+        membershipResult = self.db.execute(
+            'SELECT c.companyID, c.company_name, m.role FROM companies AS c LEFT JOIN memberships AS m where c.companyID=m.companyID AND m.userID=?', 
+            (user_id,)
+        ).fetchall()
+        
+        return [{
+            "company_id": m[0],
+            "company_name": m[1],
+            "role": m[2]
+        } for m in membershipResult]
+        
+
     def membership_exists(self, user_id):
         return True
 

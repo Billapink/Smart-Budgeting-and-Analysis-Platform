@@ -5,8 +5,7 @@ from werkzeug.utils import secure_filename
 from Modules.ImportAlgorithms import ImportAlgorithms
 from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepository
 
-repo = BudgetAndTransactionRepository([])
-import_alg = ImportAlgorithms(repo)
+import_alg = ImportAlgorithms()
 
 import_routes_bp = Blueprint('import', __name__)
 
@@ -24,6 +23,7 @@ def import_csv():
     if 'file' not in request.files:
         return "no file part"
     file = request.files['file']
+    print(f"FILE {file}")
 
     # If the user does not select a file, the browser submits an
     # empty file without a filename.

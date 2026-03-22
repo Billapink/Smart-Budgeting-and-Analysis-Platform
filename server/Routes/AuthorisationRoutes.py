@@ -27,6 +27,14 @@ def register():
     code = 200 if status == "success" else 403
     return message, code;
 
+@authorisation_bp.route("/get_memberships", methods=["GET"])
+def get_memberships():
+    user_id    = int(request.args.get("user_id")) # type: ignore
+    authorisation = getAuthorisationAlgorithms()
+    [status, data] = authorisation.get_memberships(user_id)
+    code = 200 if status == "success" else 403
+    return data, code;
+
 @authorisation_bp.route("/join_company", methods=["POST"])
 def join_company():
     data = request.get_json()

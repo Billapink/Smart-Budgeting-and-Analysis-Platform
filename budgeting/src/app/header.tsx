@@ -10,7 +10,7 @@ export default function Header() {
             <div><Link href="/" className="btn">Smart Budgeting and Analysis Platform</Link></div>
             <div>
                 {user.loggedIn ? (<>
-                    {user.username}
+                    {user.username} ({user.companyName})
                     <Link href="/user/logout" className="btn pl-8">Logout</Link>
                 </>) : (
                     <Link href="/user/login" className="btn">Login</Link>
