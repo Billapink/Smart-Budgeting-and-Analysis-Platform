@@ -1,10 +1,13 @@
 import datetime
 from dateutil.relativedelta import relativedelta
+from flask import g
+
+from Data.database import getDB
 
 
 class BudgetAndTransactionRepository:
-    def __init__(self, dbCon):
-        self.dbCon = dbCon
+    def __init__(self):
+        self.dbCon = getDB()
     
     def insert_transactions(self, transactions):
         data = []
@@ -14,11 +17,13 @@ class BudgetAndTransactionRepository:
         self.dbCon.executemany(
             "INSERT INTO transactions(companyID, date, amount, merchant, categoryID, direction) VALUES (?,?,?,?,?,?)", 
             data)
+        self.dbCon.commit()
     
     def update_transaction_category(self, transaction, categoryID):
         self.dbCon.execute(
             "UPDATE transactions SET categoryID = ? WHERE transactionID = ?", 
             (categoryID, transaction.transactionID))
+        self.dbCon.commit()
 
 
     def monthly_totals(self, startDate):
@@ -51,6 +56,7 @@ class BudgetAndTransactionRepository:
         self.dbCon.execute(
             "INSERT INTO budgets(companyID, month, budget, categoryID, created_by) VALUES (?, ?, ?, ?, ?)", 
             data)
+        self.dbCon.commit()
     
     def get_budgets(self, month):
         endDate = month + relativedelta(months = 1)
@@ -76,3 +82,12 @@ class BudgetAndTransactionRepository:
         self.dbCon.execute(
             "UPDATE budgets SET companyID = ?, month = ?, budget = ?, categoryID = ?, created_by = ? WHERE budgetID = ?", 
             data)
+        self.dbCon.commit()
+
+
+def getBugetAndTransactionRepo():
+    if "transaction_repo" in g:
+        return g.transaction_repo;
+
+    g.transaction_repo = BudgetAndTransactionRepository()
+    return g.transaction_repo

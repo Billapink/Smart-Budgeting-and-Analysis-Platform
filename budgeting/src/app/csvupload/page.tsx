@@ -1,19 +1,35 @@
 "use client"
 import { useState } from "react";
+import { userState } from "../userdata";
+import { useAtom } from "jotai";
+import { redirect } from "next/navigation";
 
-const UPLOAD_ENDPOINT = "http://127.0.0.1:8000/api/orders/vendor/register/";
+const UPLOAD_ENDPOINT = "http://127.0.0.1:5000/import_csv";
 
 function VendorRegistration() {
   const [file, setFile] = useState<File>();
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
+  const [user] = useAtom(userState);
+  
+  if (user && !(user.loggedIn && user.company)) {
+    redirect('/user/login');
+  }
 
   const handleSubmit = async (event: any) => {
     setStatus("");
     event.preventDefault();
-    const data = {csv: await file!.text()};
+    const data = {
+        companyID: user.company,
+        csv: await file!.text(),
+    };
+    console.log('DATA', data)
     const resp = await fetch(UPLOAD_ENDPOINT, {
         method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
     });
     setStatus(resp.status === 200 ? "Thank you!" : "Error.");

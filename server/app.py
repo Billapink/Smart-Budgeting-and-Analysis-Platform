@@ -18,8 +18,12 @@ from flask_cors import CORS
 UPLOAD_FOLDER = '/path/to/the/uploads'
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(
+    app,
+    resources={r"/*": {"origins": ["http://127.0.0.1:3000"]}},
+    allow_headers=["Content-Type", "Accept"],
+    methods=["GET", "POST", "OPTIONS"],
+)
 
 @app.teardown_appcontext
 def close_db(exception):

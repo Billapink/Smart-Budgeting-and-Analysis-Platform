@@ -35,20 +35,21 @@ class CategorisationRepository:
             "UPDATE categories SET companyID = ?, category_name = ?, type = ? WHERE categoryID = ?", 
             data)
 
-    def get_rules(self):
-        res = self.dbCon.execute("SELECT ruleID, companyID, match_type, pattern, categoryID, priority, active FROM category_rules ORDER BY priority DESC")
-
+    def get_rules(self, companyID):
+        res = self.dbCon.execute(
+            "SELECT ruleID, match_type, pattern, categoryID, priority, active FROM category_rules WHERE companyID=? ORDER BY priority DESC", (companyID,)
+        )
 
         rules = []
         for row in res:
             rules.append({
                 "ruleID": row[0],
-                "companyID": row[1],
-                "match_type": row[2],
-                "pattern": row[3],
-                "categoryID": row[4],
-                "priority": row[5],
-                "active": row[6]
+                "companyID": companyID,
+                "match_type": row[1],
+                "pattern": row[2],
+                "categoryID": row[3],
+                "priority": row[4],
+                "active": row[5]
             })
         
         return rules

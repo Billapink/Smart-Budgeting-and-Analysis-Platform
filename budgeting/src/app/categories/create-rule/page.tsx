@@ -10,7 +10,7 @@ const ADD_RULE_ENDPOINT = "http://127.0.0.1:5000/create_rule";
 function CreateCategory() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
-  const [matchType, setMatchType] = useState("substring");
+  const [matchType, setMatchType] = useState("exact");
   const [pattern, setPattern] = useState("");
   const [priority, setPriority] = useState("1");
   const [status, setStatus] = useState("");
@@ -91,7 +91,7 @@ function CreateCategory() {
             <h2>For category: {selectedCategory.category_name}</h2>
             <label>Match Type
                 <select onChange={(e) => setMatchType(e.target.value)} value={matchType}>
-                    <option value="substring">Substring</option>
+                    <option value="exact">Exact</option>
                     <option value="regex">Regular Expression</option>
                 </select>
             </label>

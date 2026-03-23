@@ -38,39 +38,13 @@ class CategorisationAlgorithm:
         else:
             return ["error", "Could not obtain categories"]
  
-    def load_rules(self):
-        self.rules = self.repo.get_rules()
+    def load_rules(self, companyID):
+        self.rules = self.repo.get_rules(companyID)
 
     def match_rule(self):
         pass
 
     def categorise_df(self):
-        pass
-
-    def categorise_transaction(self, transaction):
-        '''
-        Takes a transaction and returns the category ID
-        '''
-        for rule in self.rules:
-            if not rule["active"]:
-                continue
-            
-            if rule["match_type"] == "exact" and rule["pattern"] == transaction["merchant"]:
-                return rule["categoryID"]
-            
-            if rule["match_type"] == "regex" and re.match(rule["pattern"], transaction["merchant"]) != None:
-                return rule["categoryID"]
-
-
-
-
-        # fallback when no rule matches the transaction
-        return self.defaultCategoryID
-
-    def apply_overrides(self):
-        pass
-
-    def set_manual_override(self):
         pass
 
     def categorise_transaction(self, transaction):

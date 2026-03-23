@@ -17,25 +17,12 @@ def allowed_file(filename):
 
 @import_routes_bp.route("/import_csv", methods=["POST"])
 def import_csv():
-    #adapted from https://flask.palletsprojects.com/en/stable/patterns/fileuploads/
-    
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        return "no file part"
-    file = request.files['file']
-    print(f"FILE {file}")
+    message = request.get_json()
+    csvString = message["csv"]
+    companyID = message["companyID"]
 
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
-    if file.filename == '':
-        return 'No selected file'
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename) # type: ignore
-        fullpath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-        file.save(fullpath)
-
-        import_alg.parse_csv(fullpath)
-        return "success"
+    [status, message] = import_alg.import_csv(csvString, companyID)
+    return "success"
     
     return "file type not allowed"
     

@@ -38,6 +38,17 @@ def initTables():
         FOREIGN KEY(companyID) REFERENCES companies(companyID)
     );
     END;
+    CREATE TABLE IF NOT EXISTS transactions(
+        transactionID INTEGER PRIMARY KEY, 
+        categoryID INTEGER,
+        companyID INTEGER, 
+        date, 
+        amount,
+        merchant,
+        direction,
+        FOREIGN KEY(categoryID) REFERENCES categories(categoryID),
+        FOREIGN KEY(companyID) REFERENCES companies(companyID)
+    )
     """)
 
 def getDB():

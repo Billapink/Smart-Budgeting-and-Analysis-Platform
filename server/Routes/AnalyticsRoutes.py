@@ -3,8 +3,8 @@ from flask import Blueprint, request
 from Modules.AnalyticsAlgorithms import AnalyticsAlgorithms
 from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepository
 
-repo = BudgetAndTransactionRepository([])
-analytics = AnalyticsAlgorithms(repo, [], [],[])
+# repo = BudgetAndTransactionRepository([])
+# analytics = AnalyticsAlgorithms(repo, [], [],[])
 
 analytics_bp = Blueprint('analytics', __name__)
 

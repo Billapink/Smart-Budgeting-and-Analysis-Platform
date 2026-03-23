@@ -1,5 +1,8 @@
-import csv
-import pandas as pd
+from datetime import date
+
+from Modules.CSVParser import parseCSV
+from Modules.CategorisationAlgorithms import getCategorisationAlgorithms
+from Repositories.BudgetAndTransactionRepository import getBugetAndTransactionRepo
 
 class ImportAlgorithms:
     def __init__ (self):
@@ -9,17 +12,31 @@ class ImportAlgorithms:
 
         self.required_columns = ["date", "merchant", "amount"]
 
-    def parse_csv(self, csv_file):
-        transaction_rows = []
+    def import_csv(self, csv_string, companyID):
+        try:
+            csv = parseCSV(csv_string)
+        except:
+            return ["error", "Could not parse CSV"]
 
-        #parsing the csv into a dataframe using pandas 
-        df= pd.read_csv(csv_file)
-        #assigning 'headers' to the column names of the dataframe
-        headers= set(df.columns)
-        #
-        for element in headers:
-            print(element)
+        # check that headers match required columns
+        if len(csv["headers"]) != len(self.required_columns):
+            return ["error", "CSV contains incorrect number of columns"]
+        for (i, col) in enumerate(self.required_columns):
+            if (col != csv["headers"][i].lower()):
+                return ["error", "CSV contains incorrect columns"]
+        
+        # casting fields into the correct format and adding category
+        categorisationAlgorithms = getCategorisationAlgorithms()
+        categorisationAlgorithms.load_rules(companyID) # rules for the company need to be loaded
+        transactions = csv["rows"]
+        for tr in transactions:
+            tr["companyID"] = companyID
+            tr["date"] = date.fromisoformat(tr["date"])
+            tr["amount"] = float(tr["amount"])
+            tr["categoryID"] = categorisationAlgorithms.categorise_transaction(tr)
+            tr["direction"] = "expense"
 
-
-        #cast all types to their corresponding ones
+        bugetAndTransactionRepo = getBugetAndTransactionRepo()
+        bugetAndTransactionRepo.insert_transactions(transactions)
+        return ["success", "CSV transactions imported successfully"]
         
