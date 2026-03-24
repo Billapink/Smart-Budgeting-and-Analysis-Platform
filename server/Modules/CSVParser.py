@@ -1,7 +1,7 @@
 
 
 # Start State
-# Also reached for ever start of a row in the CSV
+# Also reached for every start of a row in the CSV
 class StateA:
     def nextState(self, token):
         match token:

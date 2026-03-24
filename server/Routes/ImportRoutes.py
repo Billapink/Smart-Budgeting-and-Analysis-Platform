@@ -17,14 +17,17 @@ def allowed_file(filename):
 
 @import_routes_bp.route("/import_csv", methods=["POST"])
 def import_csv():
-    message = request.get_json()
-    csvString = message["csv"]
-    companyID = message["companyID"]
+    try:
+        message = request.get_json()
+        csvString = message["csv"]
+        companyID = message["companyID"]
 
-    [status, message] = import_alg.import_csv(csvString, companyID)
-    return "success"
+        [status, message] = import_alg.import_csv(csvString, companyID)
+        return "success"
     
-    return "file type not allowed"
+    except Exception as err:
+        return f"ERROR: {err=} "
+
     
 @import_routes_bp.route("/import_status", methods=["POST"])
 def import_status():
