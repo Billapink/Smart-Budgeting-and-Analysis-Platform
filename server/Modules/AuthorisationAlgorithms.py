@@ -42,23 +42,29 @@ class AuthorisationAlgorithms:
         return hash_value
 
     def register_user(self, username, password):
-        spec_char = False
-        numeric_char = False
-        #length validation
-        if len(username) < self.min_username_length or len (username) > self.max_username_length:
-            return ["error", "Username must be between 4 and 10 characters."]
-        if len(password) < self.min_password_length or len(password) > self.max_password_length:
-            return ["error","Password must be between 7 and 10 characters."]
-        #special character and numerical values validation
-        for char in password:
-            if char in '!@£$%^&*()':
-                spec_char = True
-            if char in '0123456789':
-                numeric_char = True
-        if spec_char and numeric_char:
-            [status, message] = self.authorisation_repo.create_user(username,self.hash_password(password))
-            return ["success", "Account successfully created."] if status == "success" else ["error", message]
-        return ["error","Password must include one special character and numerical value."]
+        try:
+            spec_char = False
+            numeric_char = False
+            #length validation
+            if len(username) < self.min_username_length or len (username) > self.max_username_length:
+                raise RuntimeError("Username must be between 4 and 10 characters.")
+            if len(password) < self.min_password_length or len(password) > self.max_password_length:
+                raise RuntimeError("Password must be between 7 and 10 characters.")
+            #special character and numerical values validation
+            for char in password:
+                if char in '!@£$%^&*()':
+                    spec_char = True
+                if char in '0123456789':
+                    numeric_char = True
+            if spec_char and numeric_char:
+                [status, message] = self.authorisation_repo.create_user(username,self.hash_password(password))
+                if message:
+                    raise RuntimeError(message)
+                else:
+                    return ["success", "Account successfully created."]
+            raise RuntimeError("Password must include one special character and numerical value.")
+        except Exception as err:
+            return ["error", {err}]
 
     def create_company(self, user_id, company_name):
         #company name validation
