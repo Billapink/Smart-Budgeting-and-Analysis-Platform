@@ -27,7 +27,7 @@ class AuthorisationRepository:
             return ["error", "User already exists"]
         self.db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, passwordhash))
         self.db.commit()
-        return ["success", "user inserted into database"]
+        return ["success", None]
 
     def get_company_id(self, companyname):
         companyResult = self.db.execute('SELECT companyID from companies where company_name=?', (companyname,)).fetchall()

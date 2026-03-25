@@ -15,7 +15,7 @@ def createCompany():
     if status == "success":
         return str(data), 200
     
-    return data, 403;
+    return data, 400;
 
 @admin_bp.route("/create_category", methods=["POST"])
 def createCategory():
@@ -26,7 +26,7 @@ def createCategory():
     categorisation = getCategorisationAlgorithms()
     [status, message] = categorisation.create_category(companyID, category, categoryType)
     
-    return message, 200 if status == "success" else 403;
+    return message, 200 if status == "success" else 400;
 
 
 @admin_bp.route("/get_categories", methods=["GET"])
@@ -36,7 +36,7 @@ def getCategories():
         categorisation = getCategorisationAlgorithms()
         data = categorisation.get_categories(companyID)
     except Exception as err:
-        return f"Error: {err=}", 403
+        return f"Error: {err=}", 400
 
     return data, 200
 
@@ -52,7 +52,7 @@ def createRule():
     categorisation = getCategorisationAlgorithms()
     [status, message] = categorisation.create_rule(companyID, categoryID, matchType, pattern, priority)
     
-    return message, 200 if status == "success" else 403;
+    return message, 200 if status == "success" else 400;
 
 
 @admin_bp.route("/get_rules", methods=["GET"])
@@ -63,7 +63,7 @@ def getRules():
         categorisation = getCategorisationAlgorithms()
         data = categorisation.get_rules(companyID)
     except Exception as err:
-        return f"Error: {err=}", 403
+        return f"Error: {err=}", 400
     print(data)
     return data, 200
 
@@ -77,7 +77,7 @@ def setRuleActive():
         categorisation = getCategorisationAlgorithms()
         categorisation.set_rule_active(ruleID, active)
     except Exception as err:
-        return f"Error: {err=}", 403
+        return f"Error: {err=}", 400
     
     return "success", 200
 
@@ -90,7 +90,7 @@ def updateRulePriority():
         categorisation = getCategorisationAlgorithms()
         categorisation.update_rule_priority(ruleID, priority)
     except Exception as err:
-        return f"Error: {err=}", 403
+        return f"Error: {err=}", 400
     
     return "success", 200
 
