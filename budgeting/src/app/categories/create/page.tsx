@@ -44,10 +44,7 @@ function CreateCategory() {
                 <input type="text" onChange={(e) => setCategoryName(e.target.value)} value={categoryName} />
             </label>
             <label>Category Type
-                <select onChange={(e) => setCategoryType(e.target.value)} value={categoryType}>
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
-                </select>
+                <input type="text" onChange={(e) => setCategoryType(e.target.value)} value={categoryType} />
             </label>
             <button type="submit" disabled={!categoryName} className="btn btn-primary">
                 Create

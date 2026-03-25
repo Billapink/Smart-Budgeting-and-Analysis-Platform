@@ -1,11 +1,14 @@
 from dateutil.relativedelta import relativedelta
+from flask import g
+
+from Repositories.BudgetAndTransactionRepository import getBugetAndTransactionRepo
 
 class AnalyticsAlgorithms:
-    def __init__(self, transaction_repo, KPI_list, forecase_window, moving_avg_weights):
-        self.transaction_repo = transaction_repo
-        self.KPI_list = KPI_list
-        self.forecase_window = forecase_window
-        self.moving_avg_weights = moving_avg_weights
+    def __init__(self):
+        self.transaction_repo = getBugetAndTransactionRepo()
+        # self.KPI_list = KPI_list
+        # self.forecase_window = forecase_window
+        # self.moving_avg_weights = moving_avg_weights
     
     def aggregate_monthly(self):
         pass
@@ -15,9 +18,6 @@ class AnalyticsAlgorithms:
         COGS = self.transaction_repo.monthly_totals_by_category(month, "COGS")
         OpExp = self.transaction_repo.monthly_totals_by_category(month, "OpExp")
         Taxes = self.transaction_repo.monthly_totals_by_category(month, "Tax")
-
-
-
 
         KPIS = {
             "Revenue": revenue,
@@ -42,3 +42,10 @@ class AnalyticsAlgorithms:
 
 
         return kpis[kpi] - kpisPrevious[kpi]
+
+def getAnalyticsAlgorithms():
+    if "analytics_algorithms" in g:
+        return g.analytics_algorithms;
+
+    g.analytics_algorithms = AnalyticsAlgorithms()
+    return g.analytics_algorithms
