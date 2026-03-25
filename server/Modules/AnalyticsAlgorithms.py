@@ -3,6 +3,7 @@ from flask import g
 
 from Repositories.BudgetAndTransactionRepository import getBugetAndTransactionRepo
 from Repositories.CategorisationRepository import getCategorisationRepo
+from Modules.DateUtil import addMonth, firstOfMonth, lastOfMonth
 
 class AnalyticsAlgorithms:
     def __init__(self):
@@ -31,6 +32,8 @@ class AnalyticsAlgorithms:
         Admin = self.get_monthly_totals_by_category_name(startOfMonth, companyID, "Admin")
 
         OpExpTotal = OpExp + Payroll + SaaS + Marketing + Admin
+        if revenue == 0:
+            revenue = 0.01
 
         KPIS = {
             "Revenue": revenue,
@@ -43,18 +46,24 @@ class AnalyticsAlgorithms:
         
         return KPIS
 
-    def compute_mom(self, month, kpi):
+    def compute_trends(self, startDate, endDate, kpiChoice, companyID):
         '''
         Calculates the difference between the average kpi between a month and the previous month
         '''
+        startMonth = firstOfMonth(startDate)
+        endMonth = lastOfMonth(endDate)
 
+        kpiValues = []
+        currentMonth = startMonth
+        while currentMonth < endMonth:
+            KPIs = self.compute_kpis(currentMonth, companyID)
+            kpiValues.append(KPIs[kpiChoice])
+            currentMonth = addMonth(currentMonth)
 
-        previousMonth = month + relativedelta(months = -1)
-        # kpis = self.compute_kpis(month)
-        # kpisPrevious = self.compute_kpis(previousMonth)
-
-
-        # return kpis[kpi] - kpisPrevious[kpi]
+        return kpiValues
+    
+    def set_budget(self, startDate, categoryID, userID, budget):
+        self.transaction_repo
 
 def getAnalyticsAlgorithms():
     if "analytics_algorithms" in g:

@@ -2,6 +2,7 @@ from flask import Blueprint, request, make_response
 
 from Modules.AuthorisationAlgorithms import getAuthorisationAlgorithms
 from Modules.CategorisationAlgorithms import getCategorisationAlgorithms
+from Modules.AnalyticsAlgorithms import getAnalyticsAlgorithms
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -94,3 +95,16 @@ def updateRulePriority():
     
     return "success", 200
 
+@admin_bp.route("/set_budget", methods=["POST"])
+def get_trends():
+    try:
+        startDate = date.fromisoformat(request.args["date"])
+        categoryID = request.args["categoryID"]
+        userID = request.args["userID"]
+        budget = request.args["budget"]
+        analytics = getAnalyticsAlgorithms()
+        analytics.set_budget(startDate, categoryID, userID, budget)
+    except Exception as err:
+        return f"Error: {err=}", 400
+
+    return "success", 200

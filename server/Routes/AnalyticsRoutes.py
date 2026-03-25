@@ -9,21 +9,33 @@ analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route("/get_kpis", methods=["GET"])
 def get_kpis():
-    print('GET KPIs')
-    startDate = date.fromisoformat(request.args["date"])
-    companyID = request.args["companyID"]
-    analytics = getAnalyticsAlgorithms()
-    kpis = analytics.compute_kpis(startDate, companyID)
-    resp = jsonify(kpis)
-    print('KPIS', kpis, resp)
-    resp.status_code = 200
+    try:
+        startDate = date.fromisoformat(request.args["date"])
+        companyID = request.args["companyID"]
+        analytics = getAnalyticsAlgorithms()
+        kpis = analytics.compute_kpis(startDate, companyID)
+        resp = jsonify(kpis)
+        resp.status_code = 200
+    except Exception as err:
+        return f"Error: {err=}", 400
 
     return resp
 
 @analytics_bp.route("/get_trends", methods=["GET"])
 def get_trends():
-    # do something
-    return []
+    try:
+        startDate = date.fromisoformat(request.args["start_date"])
+        endDate = date.fromisoformat(request.args["end_date"])
+        kpi = request.args["kpi"]
+        companyID = request.args["companyID"]
+        analytics = getAnalyticsAlgorithms()
+        kpis = analytics.compute_trends(startDate, endDate, kpi, companyID)
+        resp = jsonify(kpis)
+        resp.status_code = 200
+    except Exception as err:
+        return f"Error: {err=}", 400
+
+    return resp
 
 @analytics_bp.route("/get_variance", methods=["GET"])
 def get_variance():

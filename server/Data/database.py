@@ -37,7 +37,6 @@ def initTables():
         FOREIGN KEY(categoryID) REFERENCES categories(categoryID),
         FOREIGN KEY(companyID) REFERENCES companies(companyID)
     );
-    END;
     CREATE TABLE IF NOT EXISTS transactions(
         transactionID INTEGER PRIMARY KEY, 
         categoryID INTEGER,
@@ -48,7 +47,17 @@ def initTables():
         direction,
         FOREIGN KEY(categoryID) REFERENCES categories(categoryID),
         FOREIGN KEY(companyID) REFERENCES companies(companyID)
-    )
+    );
+    CREATE TABLE IF NOT EXISTS budgets(
+        budgetID INTEGER PRIMARY KEY, 
+        categoryID INTEGER,
+        created_by INTEGER, 
+        date, 
+        budget,
+        FOREIGN KEY(categoryID) REFERENCES categories(categoryID),
+        FOREIGN KEY(created_by) REFERENCES users(userID)
+    );
+    END;
     """)
 
 def getDB():

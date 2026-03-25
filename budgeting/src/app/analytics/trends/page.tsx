@@ -5,11 +5,13 @@ import { redirect } from "next/navigation";
 import { useState } from "react";
 import { formatDateForInput } from "../tools";
 
-const GET_KPIS_ENDPOINT = "http://127.0.0.1:5000/get_kpis";
+const GET_TRENDS_ENDPOINT = "http://127.0.0.1:5000/get_trends";
 
 function ShowKPIs() {
   const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [status, setStatus] = useState("");
+  const [kpiChoice, setKPIChoice] = useState("GrossProfit");
   const [kpis, setKPIs] = useState();
   const [user] = useAtom(userState);
 
@@ -27,32 +29,50 @@ function ShowKPIs() {
 
     const params = new URLSearchParams();
     params.append("companyID", user.company);
-    params.append("date", formatDateForInput(startDate));
-    const resp = await fetch(`${GET_KPIS_ENDPOINT}?${params}`);
+    params.append("start_date", formatDateForInput(startDate));
+    params.append("end_date", formatDateForInput(endDate));
+    params.append("kpi", kpiChoice);
+    const resp = await fetch(`${GET_TRENDS_ENDPOINT}?${params}`);
     const blob = await resp.blob();
 
     if (resp.status != 200) {
         setStatus(await blob.text());
         return;
     }
-
+    
     const json = await blob.text();
     setKPIs(JSON.parse(json));
     setStatus("");
   };
 
-  const handleDateChange = (event) => {
-    console.log(event.target.value);
+  const handleStartDateChange = (event) => {
     setStartDate(new Date(event.target.value))
+  }
+
+  const handleEndDateChange = (event) => {
+    setEndDate(new Date(event.target.value))
   }
 
   return (
     <div className="flex flex-row justify-center">
         <div className="flex flex-col gap-2">
             <form onSubmit={loadKPIs} className="flex flex-col gap-2">
-                <h1>Show KPIs</h1>
-                <label>Choose Date
-                    <input type="date" onChange={handleDateChange} value={formatDateForInput(startDate)} />
+                <h1>Show Trends</h1>
+                <label>Start Date
+                    <input type="date" onChange={handleStartDateChange} value={formatDateForInput(startDate)} />
+                </label>
+                <label>End Date
+                    <input type="date" onChange={handleEndDateChange} value={formatDateForInput(endDate)} />
+                </label>
+                <label>KPI
+                    <select value={kpiChoice} onChange={(e) => setKPIChoice(e.target.value)}>
+                        <option value="Revenue">Revenue</option>
+                        <option value="GrossProfit">GrossProfit</option>
+                        <option value="GrossProfitMargin">GrossProfitMargin</option>
+                        <option value="NetProfit">NetProfit</option>
+                        <option value="NetProfitMargin">NetProfitMargin</option>
+                        <option value="COGS">COGS</option>
+                    </select>
                 </label>
                 <button type="submit" className="btn btn-primary">
                     Show

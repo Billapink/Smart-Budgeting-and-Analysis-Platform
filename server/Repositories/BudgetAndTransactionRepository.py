@@ -1,5 +1,4 @@
 import datetime
-from dateutil.relativedelta import relativedelta
 from flask import g
 
 from Data.database import getDB
@@ -28,7 +27,7 @@ class BudgetAndTransactionRepository:
 
 
     def monthly_totals(self, startDate):
-        endDate = startDate + relativedelta(months = 1)
+        endDate = addMonth(startDate)
         res = self.dbCon.execute(
             "SELECT amount FROM transactions AS t WHERE t.date >= ? AND t.date < ?", 
             (startDate.isoformat(), endDate.isoformat()))
@@ -60,7 +59,7 @@ class BudgetAndTransactionRepository:
         self.dbCon.commit()
     
     def get_budgets(self, month):
-        endDate = month + relativedelta(months = 1)
+        endDate = addMonth(month)
         res = self.dbCon.execute(
             "SELECT budgetID, companyID, month, budget, categoryID, created_by FROM budgets AS b WHERE b.month >= ? AND b.month < ?", 
             (month.isoformat(), endDate.isoformat()))

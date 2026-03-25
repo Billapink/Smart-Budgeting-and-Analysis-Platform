@@ -52,6 +52,11 @@ export default function Home() {
                 Show KPIs
             </Link>
         </p>
+        <p>
+            <Link href="analytics/trends" className="font-medium text-zinc-950">
+                Show Trends
+            </Link>
+        </p>
     </div>
   );
 }
