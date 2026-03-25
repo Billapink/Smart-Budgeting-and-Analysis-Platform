@@ -1,18 +1,24 @@
-from flask import Blueprint, request
+from datetime import date
 
-from Modules.AnalyticsAlgorithms import AnalyticsAlgorithms
+from flask import Blueprint, jsonify, request
+
+from Modules.AnalyticsAlgorithms import getAnalyticsAlgorithms
 from Repositories.BudgetAndTransactionRepository import BudgetAndTransactionRepository
-
-# repo = BudgetAndTransactionRepository([])
-# analytics = AnalyticsAlgorithms(repo, [], [],[])
 
 analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route("/get_kpis", methods=["GET"])
 def get_kpis():
-    month = request.args["month"]
-    kpis = analytics.compute_kpis(month)
-    return kpis
+    print('GET KPIs')
+    startDate = date.fromisoformat(request.args["date"])
+    companyID = request.args["companyID"]
+    analytics = getAnalyticsAlgorithms()
+    kpis = analytics.compute_kpis(startDate, companyID)
+    resp = jsonify(kpis)
+    print('KPIS', kpis, resp)
+    resp.status_code = 200
+
+    return resp
 
 @analytics_bp.route("/get_trends", methods=["GET"])
 def get_trends():

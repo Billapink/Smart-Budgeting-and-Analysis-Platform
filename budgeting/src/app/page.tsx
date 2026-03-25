@@ -46,6 +46,12 @@ export default function Home() {
                 Upload CSV File
             </Link>
         </p>
+        <h2 className="text-lg my-2">Analytics Routes</h2>
+        <p>
+            <Link href="analytics/kpis" className="font-medium text-zinc-950">
+                Show KPIs
+            </Link>
+        </p>
     </div>
   );
 }

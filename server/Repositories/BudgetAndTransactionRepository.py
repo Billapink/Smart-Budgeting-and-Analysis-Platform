@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from flask import g
 
 from Data.database import getDB
+from Modules.DateUtil import addMonth
 
 
 class BudgetAndTransactionRepository:
@@ -29,7 +30,7 @@ class BudgetAndTransactionRepository:
     def monthly_totals(self, startDate):
         endDate = startDate + relativedelta(months = 1)
         res = self.dbCon.execute(
-            "SELECT amount FROM transaction AS t WHERE t.date >= ? AND t.date < ?", 
+            "SELECT amount FROM transactions AS t WHERE t.date >= ? AND t.date < ?", 
             (startDate.isoformat(), endDate.isoformat()))
         
         sum = 0
@@ -40,9 +41,9 @@ class BudgetAndTransactionRepository:
 
 
     def monthly_totals_by_category(self, startDate, categoryID):
-        endDate = startDate + relativedelta(months = 1)
+        endDate = addMonth(startDate)
         res = self.dbCon.execute(
-            "SELECT amount FROM transaction AS t WHERE t.date >= ? AND t.date < ? AND t.categoryID = ?", 
+            "SELECT amount FROM transactions WHERE date >= ? AND date < ? AND categoryID = ?", 
             (startDate.isoformat(), endDate.isoformat(), categoryID))
         
         sum = 0

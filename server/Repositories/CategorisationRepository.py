@@ -18,7 +18,17 @@ class CategorisationRepository:
             })
         
         return categories
+    
+    def get_category_id_by_name(self, companyID, categoryName):
+        res = self.dbCon.execute(
+            "SELECT categoryID FROM categories WHERE companyID=? AND category_name=?", (companyID, categoryName)
+        ).fetchall()
 
+        if len(res) == 0:
+            raise RuntimeError("Category not found")
+
+        return res[0][0]
+    
     def create_category(self, companyID, category, categoryType):
         data = (companyID, category, categoryType)
         
