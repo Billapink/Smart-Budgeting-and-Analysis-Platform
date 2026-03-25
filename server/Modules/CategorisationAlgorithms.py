@@ -34,12 +34,26 @@ class CategorisationAlgorithm:
         result = self.repo.get_categories(companyID)
         
         if (result != None):
-            return ["success", result]
+            return result
         else:
-            return ["error", "Could not obtain categories"]
+            raise RuntimeError("Could not obtain categories")
+ 
+    def get_rules(self, companyID):
+        result = self.repo.get_rules(companyID)
+        
+        if (result != None):
+            return result
+        else:
+            raise RuntimeError("Could not obtain categories")
  
     def load_rules(self, companyID):
         self.rules = self.repo.get_rules(companyID)
+
+    def set_rule_active(self, ruleID, active):
+        self.rules = self.repo.set_rule_active(ruleID, active)
+
+    def update_rule_priority(self, ruleID, priority):
+        self.rules = self.repo.update_rule_priority(ruleID, priority)
 
     def match_rule(self):
         pass

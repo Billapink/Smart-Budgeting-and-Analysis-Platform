@@ -35,6 +35,11 @@ export default function Home() {
                 Create Rule
             </Link>
         </p>
+        <p>
+            <Link href="categories/edit-rules" className="font-medium text-zinc-950">
+                Edit Rules
+            </Link>
+        </p>
         <h2 className="text-lg my-2">Import Routes</h2>
         <p>
             <Link href="csvupload" className="font-medium text-zinc-950">

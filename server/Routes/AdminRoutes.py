@@ -29,6 +29,17 @@ def createCategory():
     return message, 200 if status == "success" else 403;
 
 
+@admin_bp.route("/get_categories", methods=["GET"])
+def getCategories():
+    try:
+        companyID    = int(request.args.get("companyID")) # type: ignore
+        categorisation = getCategorisationAlgorithms()
+        data = categorisation.get_categories(companyID)
+    except Exception as err:
+        return f"Error: {err=}", 403
+
+    return data, 200
+
 
 @admin_bp.route("/create_rule", methods=["POST"])
 def createRule():
@@ -43,11 +54,43 @@ def createRule():
     
     return message, 200 if status == "success" else 403;
 
-@admin_bp.route("/get_categories", methods=["GET"])
-def getCategories():
-    companyID    = int(request.args.get("companyID")) # type: ignore
-    categorisation = getCategorisationAlgorithms()
-    [status, data] = categorisation.get_categories(companyID)
 
-    code = 200 if status == "success" else 403
-    return data, code;
+@admin_bp.route("/get_rules", methods=["GET"])
+def getRules():
+    print('CHECK A')
+    try:
+        companyID    = int(request.args.get("companyID")) # type: ignore
+        categorisation = getCategorisationAlgorithms()
+        data = categorisation.get_rules(companyID)
+    except Exception as err:
+        return f"Error: {err=}", 403
+    print(data)
+    return data, 200
+
+
+@admin_bp.route("/set_rule_active", methods=["POST"])
+def setRuleActive():
+    try:
+        message = request.get_json()
+        ruleID = message["ruleID"]
+        active = message["active"]        
+        categorisation = getCategorisationAlgorithms()
+        categorisation.set_rule_active(ruleID, active)
+    except Exception as err:
+        return f"Error: {err=}", 403
+    
+    return "success", 200
+
+@admin_bp.route("/update_rule_priority", methods=["POST"])
+def updateRulePriority():
+    try:
+        message = request.get_json()
+        ruleID = message["ruleID"]
+        priority = message["priority"]        
+        categorisation = getCategorisationAlgorithms()
+        categorisation.update_rule_priority(ruleID, priority)
+    except Exception as err:
+        return f"Error: {err=}", 403
+    
+    return "success", 200
+

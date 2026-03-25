@@ -68,13 +68,15 @@ class CategorisationRepository:
         self.dbCon.execute(
             "UPDATE category_rules SET active = ? WHERE ruleID = ?", 
             data)
+        self.dbCon.commit()
 
-    def update_rule_priotity(self, ruleID, priority):
+    def update_rule_priority(self, ruleID, priority):
         data = (priority, ruleID)
         
         self.dbCon.execute(
             "UPDATE category_rules SET priority = ? WHERE ruleID = ?", 
             data)
+        self.dbCon.commit()
 
 
 def getCategorisationRepo():
