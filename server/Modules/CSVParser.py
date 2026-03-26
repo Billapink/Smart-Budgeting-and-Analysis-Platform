@@ -1,8 +1,16 @@
 
+# The base state class serves as the base for inheritance for all other states
+class BaseState:
+    def nextState(self, token):
+        return self
+
+    def consume(self, token, csvData):
+        pass
+
 
 # Start State
 # Also reached for every start of a row in the CSV
-class StateA:
+class StateA(BaseState):
     def nextState(self, token):
         match token:
             case '"':
@@ -22,7 +30,7 @@ class StateA:
         csvData["fields"] = []
 
 # Quoted string field
-class StateB:
+class StateB(BaseState):
     def __init__(self, ignoreFirstToken):
         self.ignoreToken = ignoreFirstToken
     
@@ -42,7 +50,7 @@ class StateB:
 
 
 # End of field
-class StateC:
+class StateC(BaseState):
     def nextState(self, token):
         match token:
             case '"': return StateB(True)
@@ -56,7 +64,7 @@ class StateC:
         csvData["current_field"] = ""
 
 # Regular unquoted field contents
-class StateD:
+class StateD(BaseState):
     def nextState(self, token):
         match token:
             case ',': return StateC()
@@ -69,7 +77,7 @@ class StateD:
 
 
 # End of quoted string
-class StateE:
+class StateE(BaseState):
     def nextState(self, token):
         match token:
             case ',': return StateC()
@@ -82,7 +90,7 @@ class StateE:
         pass
 
 # Escaped character inside quoted string
-class StateF:
+class StateF(BaseState):
     def nextState(self, token):
         match token:
             case "epsilon": raise RuntimeError("Unexpected end of input")
@@ -93,7 +101,7 @@ class StateF:
         pass
 
 # End state
-class StateZ:
+class StateZ(BaseState):
     def nextState(self, token):
         return self
 

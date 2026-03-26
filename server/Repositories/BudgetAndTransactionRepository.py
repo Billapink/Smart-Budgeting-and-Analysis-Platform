@@ -64,21 +64,21 @@ class BudgetAndTransactionRepository:
             data)
         self.dbCon.commit()
     
-    def get_budgets(self, month):
+    def get_budgets(self, month, categoryID):
         endDate = addMonth(month)
         res = self.dbCon.execute(
-            "SELECT budgetID, date, budget, categoryID, created_by FROM budgets AS b WHERE b.month >= ? AND b.month < ?", 
-            (month.isoformat(), endDate.isoformat()))
+            "SELECT budgetID, created_by, date, budget FROM budgets AS b WHERE b.date >= ? AND b.date < ? AND categoryID = ?", 
+            (month.isoformat(), endDate.isoformat(),categoryID)
+        ).fetchall()
         
         budgets = []
         for row in res:
             budgets.append({
-                "budgetID": row[0],
-                "companyID": row[1],
-                "month": datetime.date.fromisoformat(row[2]),
-                "budget": row[3],
-                "categoryID": row[4],
-                "created_by": row[5]
+                "budgetID": int(row[0]),
+                "created_by": row[1],
+                "date": datetime.date.fromisoformat(row[2]),
+                "budget": float(row[3]),
+                "categoryID": categoryID
             })
         
         return budgets
@@ -92,7 +92,7 @@ class BudgetAndTransactionRepository:
         if len(res) > 0:
             return res[0][0]
 
-    def update_budget(self, budgetID, startDate, categoryID, userID, budget):
+    def update_budget(self, startDate, categoryID, userID, budget, budgetID):
         data = (startDate, budget, categoryID, userID, budgetID)
         self.dbCon.execute(
             "UPDATE budgets SET date = ?, budget = ?, categoryID = ?, created_by = ? WHERE budgetID = ?", 

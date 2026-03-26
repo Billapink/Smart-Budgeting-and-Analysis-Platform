@@ -58,6 +58,21 @@ export default function Home() {
             </Link>
         </p>
         <p>
+            <Link href="analytics/variance" className="font-medium text-zinc-950">
+                Show Variances
+            </Link>
+        </p>
+        <p>
+            <Link href="analytics/forecast" className="font-medium text-zinc-950">
+                Show Forecast
+            </Link>
+        </p>
+        <p>
+            <Link href="analytics/anomalies" className="font-medium text-zinc-950">
+                Show Anomalies
+            </Link>
+        </p>
+        <p>
             <Link href="analytics/set-budget" className="font-medium text-zinc-950">
                 Set Budget
             </Link>
