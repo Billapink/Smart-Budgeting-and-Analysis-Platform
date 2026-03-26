@@ -1,0 +1,56 @@
+[51:47:33.199] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.226] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.251] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.273] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.356] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.430] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.458] Server  ERROR   ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js
+[51:47:33.497] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/router-server.js
+- /Users/sibyllesheikh/Documents/Smart-Budgeting-and-Analysis-Platform/budgeting/node_modules/next/dist/server/lib/start-server.js

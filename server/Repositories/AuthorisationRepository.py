@@ -24,10 +24,9 @@ class AuthorisationRepository:
     def create_user(self, username, passwordhash):
         userIfExists = self.db.execute('SELECT userID from users where username=?', (username,)).fetchall()
         if (len(userIfExists) > 0):
-            return ["error", "User already exists"]
+            raise RuntimeError("User already exists")
         self.db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, passwordhash))
         self.db.commit()
-        return ["success", None]
 
     def get_company_id(self, companyname):
         companyResult = self.db.execute('SELECT companyID from companies where company_name=?', (companyname,)).fetchall()

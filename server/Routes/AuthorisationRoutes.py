@@ -18,14 +18,14 @@ def login():
 
 @authorisation_bp.route("/register", methods=["POST"])
 def register():
-    data = request.get_json()
-    username = data["username"]
-    password = data["password"]
-    authorisation = getAuthorisationAlgorithms()
-    [status, message] = authorisation.register_user(username, password)
-    print('/register', status, message)
-    code = 200 if status == "success" else 403
-    return message, code;
+    try:
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+        authorisation = getAuthorisationAlgorithms()
+        authorisation.register_user(username, password)
+    except Exception as err:
+        return f"Error: {err=}", 400
 
 @authorisation_bp.route("/get_memberships", methods=["GET"])
 def get_memberships():
