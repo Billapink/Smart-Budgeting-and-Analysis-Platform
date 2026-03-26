@@ -15,15 +15,15 @@ class AuthorisationAlgorithms:
         #test to see if the user is in the database
         user_id= self.authorisation_repo.get_id_by_user(username)
         if user_id is None:
-            return ["error", "Your username is not recognised, please try another."]
+            raise RuntimeError ("Your username is not recognised, please try another.")
         elif self.verify_password(user_id, password):
             return ["success", user_id]
-        return ["error", "Incorrect password"]
+        raise RuntimeError ("Incorrect password")
             
         
     def verify_password(self, user_id, password):
         if len(password)< self.min_password_length:
-            return ["error", "Password length too short."]
+            raise RuntimeError("Password length too short.")
         #retrieving the hashed password of user in database
         actual_password_hash = self.authorisation_repo.get_passwordhash_by_id(user_id)
         if self.hash_password(password) == actual_password_hash:
