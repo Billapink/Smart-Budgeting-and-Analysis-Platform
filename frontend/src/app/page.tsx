@@ -57,6 +57,11 @@ export default function Home() {
                 Show Trends
             </Link>
         </p>
+        <p>
+            <Link href="analytics/set-budget" className="font-medium text-zinc-950">
+                Set Budget
+            </Link>
+        </p>
     </div>
   );
 }

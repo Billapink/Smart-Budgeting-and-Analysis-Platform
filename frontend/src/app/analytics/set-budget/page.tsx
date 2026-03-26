@@ -71,7 +71,7 @@ function SetBudget() {
             <div className="flex flex-col gap-2">
             <h1>Select Category</h1>
                 {categories.map((c) => (
-                    <div className="flex flex-row justify-between">
+                    <div className="flex flex-row justify-between" key={c.categoryID}>
                         <div>{c.category_name}</div>
                         <button className="btn" onClick={() => setSelectedCategory(c)}>Select</button>
                     </div>
@@ -92,7 +92,7 @@ function SetBudget() {
             <label>Budget
                 <input type="number" onChange={(e) => setBudget(e.target.value)} value={budget} />
             </label>
-            <button type="submit" disabled={!(matchType && pattern && priority)} className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
                 Set Budget
             </button>
             {status ? <h1>{status}</h1> : null}

@@ -1,8 +1,11 @@
+from datetime import date
+
 from flask import Blueprint, request, make_response
 
 from Modules.AuthorisationAlgorithms import getAuthorisationAlgorithms
 from Modules.CategorisationAlgorithms import getCategorisationAlgorithms
 from Modules.AnalyticsAlgorithms import getAnalyticsAlgorithms
+from Modules.DateUtil import firstOfMonth
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -96,15 +99,19 @@ def updateRulePriority():
     return "success", 200
 
 @admin_bp.route("/set_budget", methods=["POST"])
-def get_trends():
+def set_budget():
+    print("SET BUDGET")
     try:
-        startDate = date.fromisoformat(request.args["date"])
-        categoryID = request.args["categoryID"]
-        userID = request.args["userID"]
-        budget = request.args["budget"]
+        message = request.get_json()
+        startDate = firstOfMonth(date.fromisoformat(message["date"]))
+        categoryID = message["categoryID"]
+        userID = message["userID"]
+        budget = message["budget"]
         analytics = getAnalyticsAlgorithms()
         analytics.set_budget(startDate, categoryID, userID, budget)
     except Exception as err:
+        print(f"Error: {err=}")
         return f"Error: {err=}", 400
 
+    print("SUCCESS")
     return "success", 200

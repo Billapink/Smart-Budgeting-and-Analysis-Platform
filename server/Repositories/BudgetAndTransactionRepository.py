@@ -51,17 +51,23 @@ class BudgetAndTransactionRepository:
         
         return sum
     
-    def set_budget(self, budget):
-        data = (budget["companyID"], budget["month"].isoformat(), budget["budget"], budget["categoryID"], budget["created_by"])
+# budgetID INTEGER PRIMARY KEY, 
+#         categoryID INTEGER,
+#         created_by INTEGER, 
+#         date, 
+#         budget,
+
+    def set_budget(self, startDate, categoryID, userID, budget):
+        data = (startDate, categoryID, userID, budget)
         self.dbCon.execute(
-            "INSERT INTO budgets(companyID, month, budget, categoryID, created_by) VALUES (?, ?, ?, ?, ?)", 
+            "INSERT INTO budgets(date, categoryID, created_by, budget) VALUES (?, ?, ?, ?)", 
             data)
         self.dbCon.commit()
     
     def get_budgets(self, month):
         endDate = addMonth(month)
         res = self.dbCon.execute(
-            "SELECT budgetID, companyID, month, budget, categoryID, created_by FROM budgets AS b WHERE b.month >= ? AND b.month < ?", 
+            "SELECT budgetID, date, budget, categoryID, created_by FROM budgets AS b WHERE b.month >= ? AND b.month < ?", 
             (month.isoformat(), endDate.isoformat()))
         
         budgets = []
@@ -76,11 +82,20 @@ class BudgetAndTransactionRepository:
             })
         
         return budgets
-    
-    def update_budget(self, budget):
-        data = (budget["companyID"], budget["month"].isoformat(), budget["budget"], budget["categoryID"], budget["created_by"], budget["budgetID"])
+
+    def get_budget_id(self, month, categoryID):
+        endDate = addMonth(month)
+        res = self.dbCon.execute(
+            "SELECT budgetID FROM budgets AS b WHERE b.date >= ? AND b.date < ? AND categoryID = ?", 
+            (month.isoformat(), endDate.isoformat(),categoryID)
+        ).fetchall()
+        if len(res) > 0:
+            return res[0][0]
+
+    def update_budget(self, budgetID, startDate, categoryID, userID, budget):
+        data = (startDate, budget, categoryID, userID, budgetID)
         self.dbCon.execute(
-            "UPDATE budgets SET companyID = ?, month = ?, budget = ?, categoryID = ?, created_by = ? WHERE budgetID = ?", 
+            "UPDATE budgets SET date = ?, budget = ?, categoryID = ?, created_by = ? WHERE budgetID = ?", 
             data)
         self.dbCon.commit()
 

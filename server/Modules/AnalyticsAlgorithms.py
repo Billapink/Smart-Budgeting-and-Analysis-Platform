@@ -63,7 +63,11 @@ class AnalyticsAlgorithms:
         return kpiValues
     
     def set_budget(self, startDate, categoryID, userID, budget):
-        self.transaction_repo
+        budgetID = self.transaction_repo.get_budget_id(startDate, categoryID)
+        if budgetID == None:
+            self.transaction_repo.set_budget(startDate, categoryID, userID, budget)
+        else:
+            self.transaction_repo.update_budget(startDate, categoryID, userID, budget, budgetID)
 
 def getAnalyticsAlgorithms():
     if "analytics_algorithms" in g:
