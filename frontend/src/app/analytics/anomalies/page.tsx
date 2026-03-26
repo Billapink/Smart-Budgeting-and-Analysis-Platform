@@ -94,7 +94,7 @@ function ShowForecast() {
     <div className="flex flex-row justify-center">
         <div className="flex flex-col gap-2">
             <form onSubmit={loadKPIs} className="flex flex-col gap-2">
-                <h1>Show Trends</h1>
+                <h1>Show Anomalies</h1>
                 <label>Start Date
                     <input type="date" onChange={handleStartDateChange} value={formatDateForInput(startDate)} />
                 </label>

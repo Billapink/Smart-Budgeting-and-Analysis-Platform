@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { formatDateForInput } from "../tools";
+import Plot from "react-plotly.js";
 
 const GET_CATEGORIES_ENDPOINT = "http://127.0.0.1:5000/get_categories";
 const GET_TRENDS_ENDPOINT = "http://127.0.0.1:5000/get_variance";
@@ -94,7 +95,7 @@ function ShowVariance() {
     <div className="flex flex-row justify-center">
         <div className="flex flex-col gap-2">
             <form onSubmit={loadKPIs} className="flex flex-col gap-2">
-                <h1>Show Trends</h1>
+                <h1>Show Variance</h1>
                 <label>Start Date
                     <input type="date" onChange={handleStartDateChange} value={formatDateForInput(startDate)} />
                 </label>
@@ -106,7 +107,21 @@ function ShowVariance() {
                 </button>
             </form>
             {status ? <h1>{status}</h1> : null}
-            {variances.map((val, i) => (<p key={i}>{val}</p>))}
+            <button className="mt-8 btn" onClick={() => {setSelectedCategory(undefined); setVariances([])}}>Change Category</button>
+            {variances.length > 0 && (
+                <Plot 
+                    data={[
+                        {
+                            x: variances.map((data) => data.month),
+                            y: variances.map((data) => data.variance),
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'red'},
+                        },
+                    ]}
+                    layout={ {width: 800, height: 600, title: {text: selectedCategory.category_name}} }
+                />
+            )}
         </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { formatDateForInput } from "../tools";
+import Plot from 'react-plotly.js'
 
 const GET_TRENDS_ENDPOINT = "http://127.0.0.1:5000/get_trends";
 
@@ -12,6 +13,7 @@ function ShowTrends() {
   const [endDate, setEndDate] = useState(new Date());
   const [status, setStatus] = useState("");
   const [kpiChoice, setKPIChoice] = useState("GrossProfit");
+  const [loadedKPI, setLoadedKPI] = useState("");
   const [kpis, setKPIs] = useState([]);
   const [user] = useAtom(userState);
 
@@ -42,6 +44,7 @@ function ShowTrends() {
     
     const json = await blob.text();
     setKPIs(JSON.parse(json));
+    setLoadedKPI(kpiChoice);
     setStatus("");
   };
 
@@ -79,7 +82,20 @@ function ShowTrends() {
                 </button>
             </form>
             {status ? <h1>{status}</h1> : null}
-            {kpis.map((val, i) => (<p key={i}>{val}</p>))}
+            {kpis.length > 0 && (
+                <Plot 
+                    data={[
+                        {
+                            x: kpis.map((data) => data.month),
+                            y: kpis.map((data) => data.kpi),
+                            type: 'scatter',
+                            mode: 'lines+markers',
+                            marker: {color: 'red'},
+                        },
+                    ]}
+                    layout={ {width: 800, height: 600, title: {text: loadedKPI}} }
+                />
+            )}
         </div>
     </div>
   );

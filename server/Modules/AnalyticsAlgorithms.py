@@ -52,7 +52,10 @@ class AnalyticsAlgorithms:
         currentMonth = startMonth
         while currentMonth < endMonth:
             KPIs = self.compute_kpis(currentMonth, companyID)
-            kpiValues.append(KPIs[kpiChoice])
+            kpiValues.append({
+                "kpi": KPIs[kpiChoice],
+                "month": currentMonth.isoformat()
+            })
             currentMonth = addMonth(currentMonth)
 
         return kpiValues
@@ -70,7 +73,10 @@ class AnalyticsAlgorithms:
             actual = self.transaction_repo.monthly_totals_by_category(currentMonth, categoryID)
             budget = self.transaction_repo.get_budgets(currentMonth, categoryID)
             budgetValue = budget[0]["budget"] if len(budget) > 0 else 0.0
-            variances.append(actual - budgetValue)
+            variances.append({
+                "variance": actual - budgetValue,
+                "month": currentMonth.isoformat()
+            })
             currentMonth = addMonth(currentMonth)
 
         return variances
