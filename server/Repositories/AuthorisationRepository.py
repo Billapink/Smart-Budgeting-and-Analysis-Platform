@@ -53,7 +53,9 @@ class AuthorisationRepository:
 
     def get_memberships(self, user_id):
         membershipResult = self.db.execute(
-            'SELECT c.companyID, c.company_name, m.role FROM companies AS c LEFT JOIN memberships AS m where c.companyID=m.companyID AND m.userID=?', 
+            'SELECT c.companyID, c.company_name, m.role FROM companies AS c ' \
+            'LEFT JOIN memberships AS m where c.companyID=m.companyID AND m.userID=?'
+            , 
             (user_id,)
         ).fetchall()
         

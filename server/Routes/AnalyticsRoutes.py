@@ -70,21 +70,6 @@ def get_forecast():
         return f"Error: {err=}", 400
     
     return str(forecast), 200
-
-@analytics_bp.route("/get_anomalies", methods=["GET"])
-def get_anomalies():
-    try:
-        startDate = firstOfMonth(date.fromisoformat(request.args["start_date"]))
-        endDate = firstOfMonth(date.fromisoformat(request.args["end_date"]))
-        categoryID = request.args["categoryID"]
-        analytics = getAnalyticsAlgorithms()
-        anomalies = analytics.compute_anomalies(startDate, endDate, categoryID)
-        resp = jsonify(anomalies)
-        resp.status_code = 200
-    except Exception as err:
-        print(err)
-        print(traceback.format_exc())
-        return f"Error: {err=}", 400
     
     return resp
 
