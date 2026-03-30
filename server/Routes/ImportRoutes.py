@@ -23,10 +23,12 @@ def import_csv():
         companyID = message["companyID"]
 
         [status, message] = import_alg.import_csv(csvString, companyID)
+        if status == "error":
+            raise RuntimeError(message)
         return "success"
     
     except Exception as err:
-        return f"ERROR: {err=} "
+        return f"ERROR: {err=} ", 400
 
     
 @import_routes_bp.route("/import_status", methods=["POST"])
