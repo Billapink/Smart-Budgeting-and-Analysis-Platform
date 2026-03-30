@@ -15,8 +15,8 @@ class ImportAlgorithms:
     def import_csv(self, csv_string, companyID):
         try:
             csv = parseCSV(csv_string)
-        except:
-            return ["error", "Could not parse CSV"]
+        except Exception as err:
+            return ["error", f"Could not parse CSV: {err}"]
 
         # check that headers match required columns
         if len(csv["headers"]) != len(self.required_columns):
