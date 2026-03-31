@@ -20,6 +20,7 @@ def get_anomalies():
         anomalies = analytics.compute_anomalies(startDate, endDate, categoryID)
         resp = jsonify(anomalies)
         resp.status_code = 200
+        return resp
     except Exception as err:
         print(err)
         print(traceback.format_exc())

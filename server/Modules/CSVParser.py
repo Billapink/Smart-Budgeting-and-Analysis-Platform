@@ -1,5 +1,4 @@
-
-# The base state class serves as the base for inheritance for all other states
+# The base state class serves as an abstract class that all other classes will inherit from.
 class BaseState:
     def nextState(self, token):
         return self
@@ -125,6 +124,7 @@ def makeRow(headers, rowData):
     return row
 
 def parseCSV(csv_string):
+    csv_string = csv_string.replace('\r\n', '\n').replace('\r', '\n')
     tokens = list(csv_string)
     # The epsilon token is a special token signalling the end of input.
     # All other tokens are single characters, so this can't be mistaken for a string

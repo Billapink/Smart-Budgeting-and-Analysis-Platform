@@ -13,17 +13,15 @@ class ImportAlgorithms:
         self.required_columns = ["date", "merchant", "amount"]
 
     def import_csv(self, csv_string, companyID):
-        try:
-            csv = parseCSV(csv_string)
-        except Exception as err:
-            return ["error", f"Could not parse CSV: {err}"]
+
+        csv = parseCSV(csv_string)
 
         # check that headers match required columns
         if len(csv["headers"]) != len(self.required_columns):
-            return ["error", "CSV contains incorrect number of columns"]
+            raise RuntimeError("CSV contains incorrect number of columns")
         for (i, col) in enumerate(self.required_columns):
             if (col != csv["headers"][i].lower()):
-                return ["error", "CSV contains incorrect columns"]
+                raise RuntimeError("CSV contains incorrect columns")
         
         # casting fields into the correct format and adding category
         categorisationAlgorithms = getCategorisationAlgorithms()
@@ -38,5 +36,4 @@ class ImportAlgorithms:
 
         bugetAndTransactionRepo = getBugetAndTransactionRepo()
         bugetAndTransactionRepo.insert_transactions(transactions)
-        return ["success", "CSV transactions imported successfully"]
         

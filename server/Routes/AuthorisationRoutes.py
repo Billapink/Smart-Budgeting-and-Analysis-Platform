@@ -6,15 +6,15 @@ authorisation_bp = Blueprint('authorisation', __name__)
 
 @authorisation_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
-    username = data["username"]
-    password = data["password"]
-    authorisation = getAuthorisationAlgorithms()
-    [status, data] = authorisation.login(username, password)
-    if status == "success":
-        return str(data), 200
+    try:
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+        authorisation = getAuthorisationAlgorithms()
+        return str(authorisation.login(username, password)), 200
+    except Exception as err:
+        return f"Error: {err=}", 400
     
-    return data, 403;
 
 @authorisation_bp.route("/register", methods=["POST"])
 def register():

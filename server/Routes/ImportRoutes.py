@@ -22,10 +22,7 @@ def import_csv():
         csvString = message["csv"]
         companyID = message["companyID"]
 
-        [status, message] = import_alg.import_csv(csvString, companyID)
-        if status == "error":
-            raise RuntimeError(message)
-        return "success"
+        import_alg.import_csv(csvString, companyID)
     
     except Exception as err:
         return f"ERROR: {err=} ", 400

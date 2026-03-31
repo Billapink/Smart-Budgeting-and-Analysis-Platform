@@ -32,7 +32,8 @@ function VendorRegistration() {
         },
         body: JSON.stringify(data)
     });
-    setStatus(resp.status === 200 ? "Thank you!" : "Error.");
+    const text = await resp.text()
+    setStatus(resp.status === 200 ? "Thank you!" : `${text}`);
   };
 
   return (
