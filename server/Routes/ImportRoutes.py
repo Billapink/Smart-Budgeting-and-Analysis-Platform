@@ -23,9 +23,10 @@ def import_csv():
         companyID = message["companyID"]
 
         import_alg.import_csv(csvString, companyID)
+        return "", 200
     
     except Exception as err:
-        return f"ERROR: {err=} ", 400
+        return f"ERROR: {err} ", 400
 
     
 @import_routes_bp.route("/import_status", methods=["POST"])

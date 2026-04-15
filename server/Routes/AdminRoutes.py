@@ -40,7 +40,7 @@ def getCategories():
         categorisation = getCategorisationAlgorithms()
         data = categorisation.get_categories(companyID)
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
     return data, 200
 
@@ -67,7 +67,7 @@ def getRules():
         categorisation = getCategorisationAlgorithms()
         data = categorisation.get_rules(companyID)
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     print(data)
     return data, 200
 
@@ -81,7 +81,7 @@ def setRuleActive():
         categorisation = getCategorisationAlgorithms()
         categorisation.set_rule_active(ruleID, active)
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     
     return "success", 200
 
@@ -94,7 +94,7 @@ def updateRulePriority():
         categorisation = getCategorisationAlgorithms()
         categorisation.update_rule_priority(ruleID, priority)
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     
     return "success", 200
 
@@ -103,6 +103,8 @@ def set_budget():
     print("SET BUDGET")
     try:
         message = request.get_json()
+        if len(message["budget"]) > 10 or len(message["budget"]) < 1:
+            raise RuntimeError('Please enter a budget between 1 and 10 digits.')
         startDate = firstOfMonth(date.fromisoformat(message["date"]))
         categoryID = message["categoryID"]
         userID = message["userID"]
@@ -111,7 +113,7 @@ def set_budget():
         analytics.set_budget(startDate, categoryID, userID, budget)
     except Exception as err:
         print(f"Error: {err=}")
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
     print("SUCCESS")
     return "success", 200

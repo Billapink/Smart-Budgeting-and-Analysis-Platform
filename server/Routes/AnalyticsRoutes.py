@@ -19,7 +19,7 @@ def get_kpis():
         resp = jsonify(kpis)
         resp.status_code = 200
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
     return resp
 
@@ -35,7 +35,7 @@ def get_trends():
         resp = jsonify(kpis)
         resp.status_code = 200
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
     return resp
 
@@ -52,7 +52,7 @@ def get_variance():
     except Exception as err:
         print(err)
         print(traceback.format_exc())
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     
     return resp
 
@@ -67,7 +67,7 @@ def get_forecast():
     except Exception as err:
         print(err)
         print(traceback.format_exc())
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     
     return str(forecast), 200
     

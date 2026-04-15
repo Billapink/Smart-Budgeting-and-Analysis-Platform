@@ -78,7 +78,7 @@ class AuthorisationAlgorithms:
             self.authorisation_repo.add_membership(user_id, company_id, "owner")
             return ["success", "Company successfully created."]
         except Exception as err:
-            return f"Error: {err}"
+            return ["failure", f"Error: {err}"]
 
     def get_memberships(self, user_id):
         #checking if name already taken
@@ -92,10 +92,10 @@ class AuthorisationAlgorithms:
             print(f"Attempting to join {code_input} {company_id} {company_code}")
             if code_input == company_code:
                 self.authorisation_repo.add_membership(user_id, company_id, role)
-                return ["success", "Successfully joined company."]
+                return "", 200
             raise RuntimeError("Incorrect company name or code.")
         except Exception as err:
-            return f"Error: {err}"
+            return f"Error: {err}", 400
 
     #authorising the access to the company data as an existing member of the company
     def authorise_company_access(self, user_id, company_id, input_company_code):

@@ -52,7 +52,7 @@ function SelectCompany() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <h1>Join Company</h1>
             <select className="pr-8" onChange={(e) => setCompanyID(e.target.value)}>
-                <option selected>-- SELECT COMPANY --</option>
+                <option defaultValue="">-- SELECT COMPANY --</option>
                 {
                     memberships.map((m) => (<option value={m.company_id} key={m.company_id}>
                         {m.company_name} ({m.role})

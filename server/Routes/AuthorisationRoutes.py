@@ -13,7 +13,7 @@ def login():
         authorisation = getAuthorisationAlgorithms()
         return str(authorisation.login(username, password)), 200
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
     
 
 @authorisation_bp.route("/register", methods=["POST"])
@@ -24,8 +24,9 @@ def register():
         password = data["password"]
         authorisation = getAuthorisationAlgorithms()
         authorisation.register_user(username, password)
+        return "", 200
     except Exception as err:
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
 @authorisation_bp.route("/get_memberships", methods=["GET"])
 def get_memberships():
@@ -33,7 +34,7 @@ def get_memberships():
     authorisation = getAuthorisationAlgorithms()
     [status, data] = authorisation.get_memberships(user_id)
     code = 200 if status == "success" else 403
-    return data, code;
+    return data, code
 
 @authorisation_bp.route("/join_company", methods=["POST"])
 def join_company():
@@ -43,9 +44,8 @@ def join_company():
     role       = data["role"]
     code_input = int(data["code_input"])
     authorisation = getAuthorisationAlgorithms()
-    [status, message] = authorisation.join_company_by_code(user_id, company_id, role, code_input)
-    code = 200 if status == "success" else 403
-    return message, code;
+    return authorisation.join_company_by_code(user_id, company_id, role, code_input)
+
 
 @authorisation_bp.route("/logout", methods=["POST"])
 def logout():

@@ -24,7 +24,7 @@ def get_anomalies():
     except Exception as err:
         print(err)
         print(traceback.format_exc())
-        return f"Error: {err=}", 400
+        return f"Error: {err}", 400
 
 @alerts_bp.route("/post_anomalies", methods=["POST"])
 def post_anomalies():
